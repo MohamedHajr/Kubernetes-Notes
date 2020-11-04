@@ -1,6 +1,5 @@
-# Kubernetes-Notes
 
-## 🚀 Cluster Architecture🚀 
+# 🚢 🚢 Cluster Architecture and Core Concepts 🚢 🚢
 
 ### What type of servers do we have in kubernetes and what are they responsible for?
 - Control Servers (Master Nodes) -> manage, plan, schedule and monitor the cluster and host the kubernetes API(kube-apiserver)
@@ -87,6 +86,31 @@ spec:
     limits.cpu: "10"
     limits.memory: 10Gi
 ```
+
+### What are services and what do they do?
+Enable connectivity establishment between pods and external datasources or hosts
+Enable loose coupling between microservices in our application 
+
+### What are the service types available in kubernetes?
+   ![srv-types](./images/srv-types.png)
+1. NodePort
+    - Where the service makes an internal POD accessible on a port on the NODE.
+   ![srv-types](./images/srvnp.png)
+
+1. ClusterIP
+    - the service creates a **`Virtual IP`** inside the cluster to enable communication between different services such as a set of frontend servers to a set of backend servers.
+    
+1. LoadBalancer
+    - Where the service provisions a **`loadbalancer`** for our application in supported cloud providers.
+    
+    
+### How does service loadbalancing works?
+it already finds all the pods that match the same label we provide and begin load balancing automatically using a random algorithm
+
+### How does a nodeport service works with multiple pods on multiple nodes?
+Kubernetes creates a service that spans all the nodes in the cluster and maps the target port to the same node port in the cluster, this way we can access the application using any node ip in the cluster and the same port
+![srvnp4](./images/srvnp4.png)
+
 
 
 ### How can you view options for any process running in a cluster?
