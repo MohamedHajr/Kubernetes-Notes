@@ -1,4 +1,4 @@
-#Application Lifecycle Management
+# 🛰 🛰 Application Lifecycle Management 🛰 🛰
 
 ### What is the Metrics Server and how does it works?
 The Metrics Server retreives metrics from each of the kuberentes Noeds and Pods, aggregates them and store them in memory.
@@ -38,7 +38,7 @@ if we want to pass spcific parameter to whatever command that `CMD` runs, we use
 in order to set a default value if we use `ENTRYPOINT` to avoid the image erroring out if parameter weren't specificed we use a combination of `ENTRYPOINT` followed by `CMD`
 if we wanna override the program that `ENTRYPOINT` is running we use `--endpoint` with docker run --> we use a the `command` field in a pod definition
 
-###Commands
+## Commands
 - `kubectl rollout status deployment/${name-of-deployment}` 
 - `kubectl rollout deployment/${name-of-deployment}` 
 - `kubectl rollout undo deployment/${name-of-deployment}` --> for rollback 
@@ -46,6 +46,5 @@ if we wanna override the program that `ENTRYPOINT` is running we use `--endpoint
 - `echo -n "text-to-encode" | base64`
 - `echo -n "text-to-decode" | base64 --decode `
 
-
-
+## Need to understand
 - kubectl -n elastic-stack  exec -it app cat ./log/app.log
