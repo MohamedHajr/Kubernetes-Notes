@@ -31,6 +31,9 @@ When we want a process or task to compeletion in a container, or somekind of pre
 - adapter pattern
 - ambassador pattern
 
+### How does Kubernets support self healing applications?
+- through ReplicaSets and Replication Controllers. The replication controller helps in ensuring that a POD is re-created automatically when the application within the POD crashes and enough replicas of the application are running at all times.
+- Kubernetes provides additional support to check the health of applications running within PODs and take necessary actions through Liveness and Readiness Probes
 
 ## Notes
 if we want to run a command permenatly everytime an image start we create a Dockerfile and use `CMD` --> we use the `args` field in pod definition 
