@@ -1,7 +1,8 @@
 #  ⏱ ⏱ Scheduling ⏱ ⏱
 
 ### How does Scheduling works?
-every pod has a `nodeName` that we don't specify, the scheduler search pods and once it finds a pod without that field, it runs the scheduling algorithm and then assign that `POD` to the appropriate `Node`, by creating a `Binding` object and setting the nodeName.
+The scheduler search for pods that doesn't have `nodeName` field and once it finds one, it runs the scheduling algorithm and then assign that POD to the appropriate Node, by creating a `Binding object` and setting the nodeName.
+
 
 ### What happens to the PODs if there is no scheduler?
 We can assign them to the appropriate node in creation time by setting the `nodeName` || we can create a binding object and send a post request to the POD binding API.o

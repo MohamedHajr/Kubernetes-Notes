@@ -12,19 +12,20 @@ since each node has a kubelet, the kubelet contains a sub component called cAdvi
 it creates a new replica set under the hood and start scaling it, in case of a rollback it start scaling down the newly created replica set while scaling down the original replica set.
 
 ### What is the syntax difference between defining enviroment variables as plain key value pairs, config maps, and secrets?
-![env](./Images/env.png)
+![env](./images/env.png)
 
 ### Why do we need ConfigMaps?
 when we have a lot of pod definition files it become dificult to manage all the enviroment data stored in them, thus come ConfigMaps to manage all the enviroment variables centrally.
 
 ### What are the ways to inject ConfigMaps in Pods?
-![configMaps](./Images/configMaps.png)
+![configMaps](./images/configMaps.png)
 
 ### What happens when you inject secrets as volumes?
 each attribute in the secret is create as file with the value of the secret as its content
 
 ### What is init containers?
 When we want a process or task to compeletion in a container, or somekind of pre-setup for our application container. 
+![pod-boot-lifecycle](./images/pod-boot.png)
 
 ### What are the common patterns for designing multi-container PODs?
 - side car pattern
