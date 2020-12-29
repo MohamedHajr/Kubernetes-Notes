@@ -4,7 +4,7 @@
 The scheduler search for pods that doesn't have `nodeName` field and once it finds one, it runs the scheduling algorithm and then assign that POD to the appropriate Node, by creating a `Binding object` and setting the nodeName.
 
 
-### What happens to the PODs if there is no scheduler?
+### How can we assign a POD to a node if there is no scheduler?
 We can assign them to the appropriate node in creation time by setting the `nodeName` || we can create a binding object and send a post request to the POD binding API.o
 
 ### What is a taint effect and what types of effects are there?

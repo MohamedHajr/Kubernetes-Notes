@@ -45,3 +45,49 @@ we pass these certificates to the kube-apiserver service configuration file
 ### What is the naming convention for each kublet nodes as clients and as servers?
 As server -> named after there node name.
 As clients -> system:node:node-name and added to a group called `SYSTEM:NODES`
+
+### How to manage the CA signing and rotating requests and automate it?
+Using the Certificates API in the control manager by generating `CertificateSigningRequest` definition file
+![certificate-api](./images/certificates-api.png)
+
+### where does the kubectl look for the config file by default?
+$HOME/.kube/config  
+
+### What does the kubeconfing file structure consist of?
+![kube-config](./images/kube-config.png)
+
+### How is the kuberentes API structured?
+APIs are splitted across groups on the top level we have
+![api-groups](./images/api-groups.png)
+all new apis are published under `named /apis`
+![named-apis](./images/named-apis.png)
+
+### What are the authorization methods supported by kubernetes?
+- node 
+- ABAC Attribute based
+- RBAC Role Based
+- Webhook 
+- AlwaysAllow
+- AlwaysDeny
+
+### What is Node Authorization or Authorizer?
+Managing Access within the Cluster such as the interaction between the kubelet and the Kube API server, it uses a `Node Authorizer`
+to check for any request coming from a user prefixed with the name `system:node` and part of the `SYSTEM:NODES` group is authorized by the Node Authorizer
+
+### what is ABAC?
+'Like inline policies' Attribute based authorization for External access to the api. Defining a user or a group of users with a set of permessions
+
+### What is RBAC?
+Instead of associating a user with a set of permissions, we define a Role and RoleBinding
+![role](./images/role.png)
+
+### What is Webhook authorization?
+Outsourcing the authorization to a third party like `open policy agent`
+
+### How authorization works?
+By setting the `--authorization-mode` option on the kube-apiserver service and request goes through the authorization methods one by one.
+
+### How can you check specific access rights?
+`kubectl auth can-i delete nodes --as developer`
+
+
