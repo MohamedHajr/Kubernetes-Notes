@@ -49,6 +49,3 @@ if we wanna override the program that `ENTRYPOINT` is running we use `--endpoint
 - `kubectl create secret generic secret-config-name --from-literal=DB_PASS=wohoo`
 - `echo -n "text-to-encode" | base64`
 - `echo -n "text-to-decode" | base64 --decode `
-
-## Need to understand
-- kubectl -n elastic-stack  exec -it app cat ./log/app.log
