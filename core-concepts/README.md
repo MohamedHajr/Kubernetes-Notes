@@ -61,11 +61,11 @@ As in the long run if you happen to have architectural changes that requires for
 
 
 
-### How to connect to a service in another namespace?
+### How to connect to a service in another namespace, and how is this possible?
 ${service-name}.${namespace}.svc.cluster.local where
 - cluster.local is the default domain name of the kubernetes cluster,
 - svc is the subdomain for service
-we are able to do this because when a service is created a DNS entry is added automatically in this format
+This is possible because when a service is created a DNS entry is added automatically in this format
 
 ### How to switch from the defualt namespace to another one permenatly?
 `kubectl config set-context $(kubectl congig current-context) --namespace=${desired-namespace}`
@@ -116,3 +116,30 @@ Kubernetes creates a service that spans all the nodes in the cluster and maps th
 ### How can you view options for any process running in a cluster?
 - if deployed using `kubeadm` `cat /etc/kuberentes/manifests/${process}.yaml`
 - if deployed as a service `cat /etc/systemd/system/${process}.service`
+
+### How can you scale your replicaset?
+- Using `kubectl replace -f replicaset-definition.yaml`
+- `kubectl scale --replicas=6 -f replicaset-definition.yaml`
+- `kubectl scale --replicas=6 replicaset name-of-replicaset
+
+### What are Deployments in Kuberenetes?
+An abstraction on top of Replicasets that provide us with the capability to upgrade the underlying instances seamlessly using rolling updates, undo changes, and pause and resume changes as required
+
+### What is the valid range for NodePorts?
+from 30,000 to 32,767
+
+### What happends when we don't specify any of the ports of the service?
+If a `targetPort` is not provided it is assumed to be the same as `port`
+If a `nodePort` is not provided it is automatically allocated within the valid range
+
+### What happens when you create a `LoadBalancer` service in an unsupported environmnet?
+It will act as nodePort service 
+
+### How can you create a Service named redis-service of type ClusterIP to expose pod redis on port 6379?
+`kubectl expose pod redis --port=6379 --name redis-service --dry-run=client -o yaml`
+
+### How to create a `pod` and a `ClusterIP` service with one command?
+`kubectl run --image=image-name pod-name --port=8080 --expose`
+
+### How does the apply command work internally?
+It converts the yaml local file to json object and stores it the `annotations` of the live object as the `last applied configuration` [documentation](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/#merging-changes-to-primitive-fields)
