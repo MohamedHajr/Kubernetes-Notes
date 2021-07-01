@@ -81,7 +81,8 @@ limitsRequests is the requirment for the pod to run
 Limits is the maximum CPU or RAM it can grow to
 
 ### What is OOM Killed?
-When the POD has a memory 'limit' (maximum) defined and if the POD memory usage crosses the specified limit, the POD will get killed, and the status will be reported as OOMKilled. Note that, this happens despite the node having enough free memory.
+A pod status that happens When gets killed as a result of a memory 'limit' (maximum) defined and its usage crosses the specified limit.Note that, this happens despite the node having enough free memory.
+
 
 ### How does DaemonSet works?
 It uses the default Scheduler and NodeAffinity rules to schedule a pod on each node.
