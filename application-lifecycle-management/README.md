@@ -36,16 +36,31 @@ When we want a process or task to compeletion in a container, or somekind of pre
 - through ReplicaSets and Replication Controllers. The replication controller helps in ensuring that a POD is re-created automatically when the application within the POD crashes and enough replicas of the application are running at all times.
 - Kubernetes provides additional support to check the health of applications running within PODs and take necessary actions through Liveness and Readiness Probes
 
-## Notes
-if we want to run a command permenatly everytime an image start we create a Dockerfile and use `CMD` --> we use the `args` field in pod definition 
-if we want to pass spcific parameter to whatever command that `CMD` runs, we use `ENTRYRPOINT` instead.
-in order to set a default value if we use `ENTRYPOINT` to avoid the image erroring out if parameter weren't specificed we use a combination of `ENTRYPOINT` followed by `CMD`
-if we wanna override the program that `ENTRYPOINT` is running we use `--endpoint` with docker run --> we use a the `command` field in a pod definition
+### How to specify an executable and argurments in Dockerfiles and pod definition files?
+- executables
+  - use `ENTRYPOINT` instruction in Dockerfiles
+  - a `command` field in pod defintion files
+- arguments or parameters
+  - use `CMD` instruction in Dockerfiles
+  - `args` field in pod definition files
 
-## Commands
-- `kubectl rollout status deployment/${name-of-deployment}` 
-- `kubectl rollout deployment/${name-of-deployment}` 
-- `kubectl rollout undo deployment/${name-of-deployment}` --> for rollback 
-- `kubectl create secret generic secret-config-name --from-literal=DB_PASS=wohoo`
-- `echo -n "text-to-encode" | base64`
-- `echo -n "text-to-decode" | base64 --decode `
+### Why we use a combination of `ENTRYPOINT` and `CMD` in Dockerfiles?
+in order to set a default value to avoid the image erroring out if parameter weren't specificed
+
+### How can we create a secret imperativly?
+`kubectl create secret generic secret-config-name --from-literal=DB_PASS=wohoo`
+
+### What are the requirments when creating secrets in a declartive way?
+You must specify secerts in a hashed format, for example using,
+- `echo -n "secret-to-encode" | base64`
+- `echo -n "secret-to-decode" | base64 --decode `
+
+### What are some crucial practices that should be applied when using secrets?
+- Not checking-in secret object definition files to source code repositories.
+- Enabling Encryption at Rest for Secrets so they are stored encrypted in ETCD. 
+
+### What are better alternative for kubernetes secrets?
+Helm Secrets and HashiCorp Vault.
+
+### How to rollback a deployment?
+`kubectl rollout undo deployment/${name-of-deployment}`
