@@ -17,11 +17,17 @@ resource "aws_security_group" "worker_nodes_sg" {
   description = "Cluster Worker Nodes instances security group"
   vpc_id      = data.aws_vpc.default.id
 
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  dynamic "ingress" {
+    for_each = local.worker_nodes.ingress
+    iterator = each
+    content {
+      from_port       = each.value.from_port
+      to_port         = each.value.to_port
+      protocol        = each.value.protocol
+      cidr_blocks     = try(each.value.cidr_blocks, [])
+      self            = try(each.value.self, false)
+      security_groups = try(each.value.security_groups, [])
+    }
   }
 
   egress {
@@ -37,11 +43,17 @@ resource "aws_security_group" "master_nodes_sg" {
   description = "Cluster master nodes instances security group"
   vpc_id      = data.aws_vpc.default.id
 
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  dynamic "ingress" {
+    for_each = local.master_nodes.ingress
+    iterator = each
+    content {
+      from_port       = each.value.from_port
+      to_port         = each.value.to_port
+      protocol        = each.value.protocol
+      cidr_blocks     = try(each.value.cidr_blocks, [])
+      self            = try(each.value.self, false)
+      security_groups = try(each.value.security_groups, [])
+    }
   }
 
   egress {

@@ -18,12 +18,12 @@ variable "region" {
 #####################
 variable "ec2_worker_nodes_instance_type" {
   type    = string
-  default = "t2.micro"
+  default = "t3.medium"
 }
 
 variable "ec2_master_nodes_instance_type" {
   type    = string
-  default = "t2.micro"
+  default = "t3.medium"
 }
 
 variable "ec2_public_key_name" {

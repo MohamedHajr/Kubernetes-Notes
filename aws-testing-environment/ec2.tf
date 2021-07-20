@@ -1,15 +1,15 @@
-data "aws_ami" "amzn_linux_2" {
+data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["amazon"]
+  owners      = ["099720109477"]
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 
   filter {
-    name   = "root-device-type"
-    values = ["ebs"]
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
 }
 
@@ -22,7 +22,7 @@ resource "aws_key_pair" "public_key" {
 resource "aws_launch_template" "worker_nodes_lt" {
   name          = "worker-nodes-lt"
   description   = "Launch Template for the worker nodes instances"
-  image_id      = data.aws_ami.amzn_linux_2.id
+  image_id      = data.aws_ami.ubuntu.id
   instance_type = var.ec2_worker_nodes_instance_type
   key_name      = var.ec2_public_key_name
 
@@ -30,6 +30,8 @@ resource "aws_launch_template" "worker_nodes_lt" {
     associate_public_ip_address = true
     security_groups             = [aws_security_group.worker_nodes_sg.id]
   }
+
+  user_data = filebase64("init_nodes.sh")
 }
 
 resource "aws_autoscaling_group" "worker_nodes_asg" {
@@ -54,7 +56,7 @@ resource "aws_autoscaling_group" "worker_nodes_asg" {
 resource "aws_launch_template" "master_nodes_lt" {
   name          = "master-nodes-lt"
   description   = "Launch Template for the master nodes instances"
-  image_id      = data.aws_ami.amzn_linux_2.id
+  image_id      = data.aws_ami.ubuntu.id
   instance_type = var.ec2_master_nodes_instance_type
   key_name      = var.ec2_public_key_name
 
@@ -62,6 +64,8 @@ resource "aws_launch_template" "master_nodes_lt" {
     associate_public_ip_address = true
     security_groups             = [aws_security_group.master_nodes_sg.id]
   }
+
+  user_data = filebase64("init_nodes.sh")
 }
 
 resource "aws_autoscaling_group" "master_nodes_asg" {
