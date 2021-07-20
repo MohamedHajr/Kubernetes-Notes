@@ -1,17 +1,16 @@
 # 🛰 🛰 Application Lifecycle Management 🛰 🛰
 
 ### What is the Metrics Server and how does it works?
-The Metrics Server retreives metrics from each of the kuberentes Noeds and Pods, aggregates them and store them in memory.
-since each node has a kubelet, the kubelet contains a sub component called cAdvisor(container advisor) and its responsible for retreiving perfromance metrics from pods and exposing them through the kubelet api to be avaialble to Metrics Server  
+It retreives metrics from each Node and Pod, aggregates them and store them in memory. since each node has a kubelet, each kubelet contains a sub component called cAdvisor(container advisor) which is responsible for retreiving perfromance metrics from pods and exposing them through the kubelet api to be avaialble to Metrics Server.
 
 ### What are the types of deployment stratgies?
 - Replace (Scale down to 0 then scale up to n replicas)
 - rolling updates (default one)(taking a replica down and bring one up, one by one) 
 
 ### How does rolling updates works?
-it creates a new replica set under the hood and start scaling it, in case of a rollback it start scaling down the newly created replica set while scaling down the original replica set.
+it creates a new replica set under the hood and start scaling it, in case of a rollback it start scaling down the newly created replicaset while scaling down the original replicaset.
 
-### What is the syntax difference between defining enviroment variables as plain key value pairs, config maps, and secrets?
+### What are the ways to define environment varaibles?
 ![env](./images/env.png)
 
 ### Why do we need ConfigMaps?
@@ -21,7 +20,7 @@ when we have a lot of pod definition files it become dificult to manage all the 
 ![configMaps](./images/configMaps.png)
 
 ### What happens when you inject secrets as volumes?
-each attribute in the secret is create as file with the value of the secret as its content
+each attribute in the secret is created as file with the value of the secret as its content
 
 ### What is init containers?
 When we want a process or task to compeletion in a container, or somekind of pre-setup for our application container. 
@@ -33,14 +32,14 @@ When we want a process or task to compeletion in a container, or somekind of pre
 - ambassador pattern
 
 ### How does Kubernets support self healing applications?
-- through ReplicaSets and Replication Controllers. The replication controller helps in ensuring that a POD is re-created automatically when the application within the POD crashes and enough replicas of the application are running at all times.
+- Through ReplicaSets and Replication Controllers. The replication controller helps in ensuring that a POD is re-created automatically when the application within the POD crashes and enough replicas of the application are running at all times.
 - Kubernetes provides additional support to check the health of applications running within PODs and take necessary actions through Liveness and Readiness Probes
 
 ### How to specify an executable and argurments in Dockerfiles and pod definition files?
-- executables
+- Executables
   - use `ENTRYPOINT` instruction in Dockerfiles
   - a `command` field in pod defintion files
-- arguments or parameters
+- Arguments or Parameters
   - use `CMD` instruction in Dockerfiles
   - `args` field in pod definition files
 
