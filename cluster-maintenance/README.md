@@ -1,11 +1,11 @@
 # Cluster Maintenance
 
 ### what is the time kuberentes wait for a pod to come back online?
-`kube-controller-manager --pod-evection-timeout=5m0s` and defaults to 5 mins
+`kube-controller-manager --pod-evection-timeout=5m0s` and defaults to 5 mins.
 
-### What is a safe way to do an upgrad and taking down a node?
+### What to maintian capacity when taking a node down?
 `drain` the node to move workloads to other nodes in the cluster(gracefully terminated and recreated on anothera)
-then `uncordon` the node so the pods can be scheduled on it
+then `uncordon` the node so the pods can be scheduled on it once you finish.
 
 ### How can prevent any scheduling on a specifc node?
 by cordoning the node `kubectl cordon node-1`
@@ -27,18 +27,17 @@ upgrading one minor version at a time.
 ![versions](./images/versions.png)
 
 ### What is the way to upgrade a kubernetes cluster deployed using kubeadm?
-- upgrading kubeadm `apt-get upgrade -y kubeadm=1.12.0-00`
-- applying the upgrade to the cluster using kubeadm `kubeadm upgrade apply v1.12.0`
-- upgrading manually each kubelet on any node  
+[documentation](https://v1-20.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+1- upgrading kubeadm `apt-get install -y --allow-change-held-packages kubeadm=<new-version>`
+2- Check for latest version then apply it `kubeadm upgrade plan`, `kubeadm upgrade apply <new-version>`
+3- upgrading manually each kubelet on any node  
     - draining if it has workloads `kubectl drain node-1`
-    - upgrade kubeadm `apt-get upgrade -y kubeadm=1.12.0-00`
-    - upgrading the kublet `apt-get upgrade -y kubelet-1.12.0-00`
-    - upgrading the node configuration `kubeadm upgrade node config --kubelet-version v1.12.0`
+    - update the kubeadm on the node repeat step 1
+    - upgrading the node `kubeadm upgrade node`
+    - upgrading the kublet `apt-get install -y --allow-change-held-packages kubelet=<version> kubectl=<version>`
+    - `kubectl uncordon node01`
+    - `sudo systemctl daemon-reload`
     - `systemctl restart kubelet`
-
-### How can we take backups for our kuberentes cluster?
-- saving all resources to a yaml file `kubectl get all -A -o yaml > all-resources.yaml` for a few resource groups
-- using Velero to take backups from the cluster using the API
 
 ### How can we backup ETCD?
 - backing up the `--data-dir` that we specified when configuring ETCD
@@ -61,4 +60,8 @@ upgrading one minor version at a time.
 it inilaizes a new cluster configuration and configure the memebers of ETCD as new memebers to a new cluster, to prevent a new memeber to join an exisiting cluster
 
 ### How to double check if an etcdctl command is working before running it?
-by applying the `memeber list` options on it
+by applying the `memeber list` options on it.
+
+### How can you backup all resouces running on the cluster?
+- By quering the kube-api server `kubectl get all -A -o yaml > all-resources.yaml` for a few resource groups.
+- Using a tool like Velero to take backups from the cluster using the API.
