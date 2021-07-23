@@ -27,10 +27,10 @@ upgrading one minor version at a time.
 ![versions](./images/versions.png)
 
 ### What is the way to upgrade a kubernetes cluster deployed using kubeadm?
-[documentation](https://v1-20.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
-1- upgrading kubeadm `apt-get install -y --allow-change-held-packages kubeadm=<new-version>`
-2- Check for latest version then apply it `kubeadm upgrade plan` -> `kubeadm upgrade apply <new-version>`
-3- upgrading manually each kubelet on any node  
+[Offical documentation](https://v1-20.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/)
+- upgrading kubeadm `apt-get install -y --allow-change-held-packages kubeadm=<new-version>`
+- Check for latest version then apply it `kubeadm upgrade plan` -> `kubeadm upgrade apply <new-version>`
+- upgrading manually each kubelet on any node  
     - draining if it has workloads `kubectl drain node-1`
     - update the kubeadm on the node repeat step 1
     - upgrading the node `kubeadm upgrade node`    
