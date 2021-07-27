@@ -34,14 +34,28 @@ A standard that define how an orchestration soultion like (kubernetes, CloudFoun
 a universal standard that make any container orchestration tool work with any storage vendor with a supported plugin. write your own drivers for your own storage.
 ![csi](./images/csi.png)
 
+### Why it's not recommended to uses hostPath on multiple nodes?
+Because the pods will write to the volume directory on their respectative node and expect all of those direcotries to be the same but since they are on different servers they are infact not the same.
+Instead we should be using an external replicated cluster storage solution.
+
 ### What is the difference between volumes and persisten volumes?
 We define volumes in pod definition files
-Persistent volumes is a cluster wide pool of storage volumes 
+Persistent volumes is a cluster wide pool of storage volumes that each pod can carve out a piece of it using PVC.
 
 ### What are the Access Modes for persisten volumes?
 - ReadOnlyMany
 - ReadWriteOnce
 - ReadWriteMany
+
+### What is the relationship between PV and PVC?
+One to One relationship, so no other claims can utilize the capcity of the volume even if not all of it is utilized.
+
+### What happens to the underline PV if the claim is deleted?
+Depends on the value of option `persistentVolumeReclaimPolicy` it can be one of the following
+- Retain(Remains until manually deleted and not available to use by any other claims)
+- Delete
+- Recycle(Data will be scrubbed before making it available again)
+
 
 ### What are storage classes?
 Dynamically provisioning storage for PVCs.
