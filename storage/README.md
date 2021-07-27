@@ -3,15 +3,19 @@
 ### Where does docker store data once its installed?
 Under `/var/lib/docker` and create 4 folder `aufs, container, images, volumes`
 
+### How does docker store the files of an image or a container?
+Layered Architecture, each line of instruction create a new layer with just the changes of the previous layer.
+
 ### What is the copy on write mechanism in docker?
 As the image layers are read only, upon trying to write to any of its files docker makes a new copy to the container layer.
 ![copy on write](./images/copy-on-write.png)
 
 ### What are the types of mounting and explain both of them?
-Volume Mounting -> which is binding a folder inside docker container to the default docker volumes folder under `/var/lib/docker/volumes`
-Bind Mounting -> which is binding a folder inside docker to folder at any location on the docker host
+Volume Mounting -> which is binding a directory inside docker container to the default docker volumes directory under `/var/lib/docker/volumes`
+Bind Mounting -> which is binding a directory inside docker to a directory at any location on the docker host.
+
 ### How does volume mounting works in Docker?
-Docker create a new folder under `/var/lib/docker/volumes` with the volume name, upon running the container docker mounts the volume to the target file inside the container layer so all data written in that file is in fact saved at the volume.
+Docker create a new directory under `/var/lib/docker/volumes` with the volume name, upon running the container docker mounts the volume to the target directory inside the container layer so all data written in that file is in fact saved at the volume.
 ![volume creation](volume-creation.png)
 
 ### what is the new and prefered way to mount volumes in docker?
