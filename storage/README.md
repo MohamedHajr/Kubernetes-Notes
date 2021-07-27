@@ -16,16 +16,19 @@ Bind Mounting -> which is binding a directory inside docker to a directory at an
 
 ### How does volume mounting works in Docker?
 Docker create a new directory under `/var/lib/docker/volumes` with the volume name, upon running the container docker mounts the volume to the target directory inside the container layer so all data written in that file is in fact saved at the volume.
-![volume creation](volume-creation.png)
+![volume creation](./images/volume-creation.png)
 
 ### what is the new and prefered way to mount volumes in docker?
 using `--mount`, e.g., `docker run --mount type=bind,source=/my-project/database,target=/var/lib/mysql  mysql`
 
 ### What does Docker uses to enable and manage its layered architecture?
-Storage Drivers such as `AUFS`,`ZFS`,`Overlay`, `Device Mapper`
+Storage Drivers such as `AUFS`,`ZFS`, `BTRFS`, `Overlay`, `Overlay2`, `Device Mapper`
+
+### How does Docker handle and manages volumes?
+Volume Drivers plugins such as `Local`, `Azure File Storage`, `Convoy`, `Digital Ocean Block Storage`, `Flocker`, `gce-docker`, `GlusterFS`, `NetApp`, `RexRay`, `Portworx`, `VMware vSphere Storage`.
 
 ### What is a CRI?
-A standard that define how an orchestration soultion like kubernetes will communicate with a container runtimes like docker or rocket
+A standard that define how an orchestration soultion like (kubernetes, CloudFoundry, and Mesos)  will communicate with a container runtimes like docker or rocket
 
 ### What is CSI?
 a universal standard that make any container orchestration tool work with any storage vendor with a supported plugin. write your own drivers for your own storage.
