@@ -5,4 +5,4 @@
 - [03-Application Lifecycle Management](application-lifecycle-management/)
 - [04-Cluster Maintenance](cluster-maintenance/)
 - [05-Security](security/)
-
+- [06-Storage](security/)
