@@ -75,6 +75,7 @@ By creating a virtual switch and a virtual cable for each namespace with one end
 
 ### What is the bridge network virtual switch?
 Just another network interface on the host.
+
 ### How to connect the namespaces network to the host machine?
 By assiging an IP address to the namespaces network switch as for the host machine its just another network interface 
 `ip addr add 192.168.15.5/24 dev v-net-0`
@@ -86,6 +87,7 @@ By assiging an IP address to the namespaces network switch as for the host machi
 
 ### What does Docker uses to perform port mapping?
 Create a NAT rule using iptables, creating an entry in the NAT table to append the rules to the prerouting chain to change destination port from x to y.
+
 ### What docker does once installed on a host?
 It creates a internal private netowrk called `bridge` in docker and `docker0` on the host
 
@@ -126,6 +128,7 @@ A set of standards that define how programs should be developed to solve network
 - Worker
   - Services -> `30000-32767`
   - Kubelet -> `10250`
+
 ### How does Kubernetes handles Docker Incompatiabilty with CNI?
 It creates container with no networking at all, then invoke the CNI plugin with the right parameters
 
@@ -152,21 +155,6 @@ The kube-proxy creates forwading rules on each node on the cluster saying any tr
 - iptables(default)
 - ipvs
 
-### For each resource kuberentes creates a sub domain with 
-for each namespace the DNS server creates a subdomain
-all services are grouped together in another namespace called `svc`
-all services and pods are grouped together in the root domain for the cluster `cluster.local` by default.
-If records for pods are enabled, kubernetes generates a hostname by replacing the dots in the IP address by dashes.
-
-### Where is CoreDNS config file located?
-`/etc/coredns/CoreFile`
-
-### Any record that the dns server can solve
-Forwarded to the nameserver specified in coreDNS  pods /etc/resolve.conf file where it is set to use the nameserver from the kubernetes node.
-
-###
-Core DNS create a service named kube-dns, the IP address of this service is configured as the namespace server on the pods.
-
 ### What is ingress?
 A layer 7 load balance that can be configured using native kubernetes premitives to route traffic to different services based on the path using a single externally accessible URL and implmenet SSL security.
 
@@ -177,3 +165,18 @@ A layer 7 load balance that can be configured using native kubernetes premitives
 
 ### How to generate a service yaml for a deployment imperatively?
 kubectl -n ingress-space expose deployment ingress-controller --name ingress --port 80 --target-port 80 --type NodePort --dry-run=client -o yaml > ingress-svc.yaml
+
+### Where is CoreDNS config file located?
+`/etc/coredns/CoreFile`
+
+### For each resource kuberentes creates a sub domain with 
+for each namespace the DNS server creates a subdomain
+all services are grouped together in another namespace called `svc`
+all services and pods are grouped together in the root domain for the cluster `cluster.local` by default.
+If records for pods are enabled, kubernetes generates a hostname by replacing the dots in the IP address by dashes.
+
+### Any record that the dns server can solve
+Forwarded to the nameserver specified in coreDNS  pods /etc/resolve.conf file where it is set to use the nameserver from the kubernetes node.
+
+###
+Core DNS create a service named kube-dns, the IP address of this service is configured as the namespace server on the pods.
